@@ -4,783 +4,342 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Winter In Survival — Máy Chủ Minecraft Việt Nam</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #131a26;
-            --card-border: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --primary: #38bdf8;
-            --primary-hover: #0ea5e9;
-            --success: #10b981;
-            --accent-orange: #f97316;
-            --font-sans: 'Inter', sans-serif;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            --primary-color: #007bff;
+            --primary-dark: #0056b3;
+            --bg-light: #f8f9fa;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --card-bg: #ffffff;
         }
 
         body {
-            font-family: var(--font-sans);
-            background-color: var(--bg-color);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-light);
             color: var(--text-main);
-            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        a {
-            color: inherit;
-            text-decoration: none;
+        /* Navbar Custom */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
         }
-
-        /* Header / Navbar */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(11, 15, 25, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--card-border);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .navbar-brand {
+            font-weight: 800;
+            color: var(--primary-color) !important;
             letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #fff;
         }
-
-        .logo span {
-            color: var(--primary);
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            font-weight: 500;
-        }
-
-        .nav-menu a:hover {
-            color: var(--primary);
-            transition: color 0.3s;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .btn-login {
-            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
-            color: #fff;
-            padding: 0.5rem 1.25rem;
-            border-radius: 6px;
+        .nav-link {
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: transform 0.2s, opacity 0.2s;
+            color: #495057 !important;
+            transition: color 0.2s;
         }
-
-        .btn-login:hover {
-            transform: translateY(-1px);
-            opacity: 0.95;
+        .nav-link:hover {
+            color: var(--primary-color) !important;
         }
 
         /* Hero Section */
-        .hero {
+        .hero-section {
+            padding: 140px 0 80px 0;
+            background: linear-gradient(135deg, #e6f0fa 0%, #f8f9fa 100%);
             position: relative;
-            min-height: 85vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 8rem 2rem 4rem 2rem;
-            background: radial-gradient(circle at top, rgba(56, 189, 248, 0.15), transparent 60%);
         }
-
-        .hero-content {
-            max-width: 800px;
-            z-index: 2;
-        }
-
-        .hero-tag {
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            color: var(--primary);
-            padding: 0.4rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 {
+        .hero-title {
             font-size: 3.5rem;
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-        }
-
-        .hero h1 span {
-            background: linear-gradient(to right, #fff, var(--primary));
+            background: linear-gradient(45deg, #0056b3, #00a2ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 2.5rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.2rem; }
+            .hero-section { padding: 100px 0 50px 0; text-align: center; }
         }
 
-        .btn-primary {
-            background: #fff;
-            color: var(--bg-color);
-            padding: 0.85rem 2rem;
-            border-radius: 8px;
+        /* Status & IP Box */
+        .status-badge {
+            background-color: #e2f5ea;
+            color: #1f7a42;
             font-weight: 700;
-            font-size: 1rem;
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
-            transition: all 0.3s;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary);
-            color: #fff;
-            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
-        }
-
-        .scroll-down {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
-            40% { transform: translate(-50%, -10px); }
-            60% { transform: translate(-50%, -5px); }
-        }
-
-        /* Main Sections Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .section-label {
-            color: var(--primary);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 2.5rem;
-        }
-
-        /* Live Status Section */
-        .status-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-            margin-bottom: 5rem;
-        }
-
-        .status-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 2rem;
-        }
-
-        .status-header {
-            display: flex;
-            justify-content: space-between;
+            padding: 6px 16px;
+            border-radius: 50px;
+            display: inline-flex;
             align-items: center;
-            margin-bottom: 2rem;
+            gap: 8px;
         }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            color: var(--success);
-            padding: 0.3rem 0.8rem;
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .pulse-dot {
+        .status-dot {
             width: 8px;
             height: 8px;
-            background-color: var(--success);
+            background-color: #28a745;
             border-radius: 50%;
             animation: pulse 1.5s infinite;
         }
-
         @keyframes pulse {
-            0% { transform: scale(0.9); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.5; }
-            100% { transform: scale(0.9); opacity: 1; }
+            0% { transform: scale(0.9); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.7; }
+        }
+        .ip-box {
+            background: var(--card-bg);
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
 
-        .player-count {
-            font-size: 3rem;
-            font-weight: 800;
+        /* Section Styling */
+        .section-tag {
+            color: var(--primary-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.85rem;
+            display: block;
             margin-bottom: 0.5rem;
         }
-
-        .player-count span {
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            font-weight: 400;
+        .section-title {
+            font-weight: 800;
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
         }
 
-        .version-tag {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-        }
-
-        .ip-box-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .ip-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--card-border);
-            padding: 1rem;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .ip-box:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Nút tải APK đặc biệt */
-        .btn-apk-download {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
-            border: 1px solid rgba(16, 185, 129, 0.3) !important;
-        }
-
-        .btn-apk-download:hover {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(16, 185, 129, 0.1)) !important;
-            border-color: var(--success) !important;
-        }
-
-        .btn-apk-download .ip-text h4 {
-            color: var(--success) !important;
-        }
-
-        .btn-apk-download .download-icon {
-            color: var(--success);
-            font-size: 1.2rem;
-        }
-
-        .ip-text p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .ip-text h4 {
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .copy-icon {
-            color: var(--text-muted);
-        }
-
-        .stats-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .mini-stat {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .mini-stat h3 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .mini-stat p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 0.25rem;
-        }
-
-        /* Game Modes Section */
-        .grid-modes {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 5rem;
-        }
-
-        .mode-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 2.5rem 2rem;
-            position: relative;
-            display: flex;
-            flex-direction: column;
+        /* Game Mode Cards */
+        .game-card {
+            background: var(--card-bg);
+            border: 1px solid #e9ecef;
+            border-radius: 20px;
+            padding: 30px;
             height: 100%;
-            transition: transform 0.3s, border-color 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
-
-        .mode-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(56, 189, 248, 0.4);
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,123,255,0.08);
+            border-color: rgba(0,123,255,0.2);
         }
-
-        .badge {
+        .game-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .card-badge {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
+            top: 20px;
+            right: 20px;
             font-size: 0.75rem;
             font-weight: 700;
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 50px;
         }
 
-        .badge.popular { background: rgba(56, 189, 248, 0.15); color: var(--primary); }
-        .badge.hot { background: rgba(249, 115, 22, 0.15); color: var(--accent-orange); }
-        .badge.new { background: rgba(16, 185, 129, 0.15); color: var(--success); }
-
-        .mode-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+        /* Step Guide */
+        .step-box {
+            background: var(--card-bg);
+            border: 1px solid #e9ecef;
+            border-radius: 16px;
+            padding: 25px;
+            height: 100%;
+            position: relative;
         }
-
-        .mode-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .mode-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-            flex-grow: 1;
-        }
-
-        .mode-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 1.2rem;
-        }
-
-        .status-dot-text {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            color: var(--success);
-            font-weight: 500;
-        }
-
-        .btn-join-mode {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        /* Getting Started Section */
-        .step-section {
-            margin-bottom: 5rem;
-        }
-
-        .grid-steps {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .step-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 2rem;
-        }
-
-        .step-num {
+        .step-number {
             font-size: 2.5rem;
             font-weight: 800;
-            color: rgba(56, 189, 248, 0.2);
-            margin-bottom: 1rem;
+            color: #e9ecef;
+            position: absolute;
+            top: 15px;
+            right: 25px;
             line-height: 1;
-        }
-
-        .step-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .step-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* Video / Media Section */
-        .media-container {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: #000;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--card-border);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        .media-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
         }
 
         /* Footer */
         footer {
-            background-color: #06090f;
-            border-top: 1px solid var(--card-border);
-            padding: 3rem 2rem;
-            text-align: center;
+            background-color: #ffffff;
+            border-top: 1px solid #e9ecef;
+            padding: 40px 0;
+            font-size: 0.95rem;
             color: var(--text-muted);
-            font-size: 0.9rem;
         }
-
-        /* Responsive Design */
-        @media (max-width: 968px) {
-            .status-grid, .grid-modes, .grid-steps {
-                grid-template-columns: 1fr;
-            }
-            .hero h1 { font-size: 2.5rem; }
-            .nav-menu { display: none; }
-            .ip-box-container { grid-template-columns: 1fr; }
-        }
-    /* Tự động in hoa, thu nhỏ và đậm cho tất cả các tiêu đề h2, h3 */
-h2.section-title, .mode-card h3, .step-card h3 {
-    text-transform: uppercase; /* Tự động viết in hoa toàn bộ */
-    font-weight: 800;          /* Tăng độ in đậm tối đa */
-    letter-spacing: 0.5px;     /* Khoảng cách giữa các chữ rộng ra chút cho dễ đọc */
-}
-
-/* Hạ kích thước chữ của các tiêu đề xuống nhỏ hơn */
-h2.section-title {
-    font-size: 1.6rem !important; /* Tiêu đề lớn của các khu vực */
-}
-
-.mode-card h3, .step-card h3 {
-    font-size: 1.1rem !important; /* Tiêu đề tên Chế độ chơi và các Bước */
-}
-
-
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation -->
-    <header>
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <i class="fa-solid fa-cubes"></i> Winter In <span>Survival</span>
-            </a>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fa-solid fa-snowflake me-2"></i>WINTER IN SURVIVAL</a>
+            <button class="navbar-toggler" type="text/top" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link px-3" href="#home">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#stat">Trạng thái Server</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#modes">Chế độ chơi</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#guide">Cách tham gia</a></li>
+                </ul>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <!-- Hero Content Arena -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-tag">Winter In Survival — Minecraft Server Vietnam</div>
-            <h1>Chào mừng đến <br><span>Winter In Survival</span></h1>
-            <p>Máy chủ Minecraft Việt Nam phiên bản Winter In Survival, trải nghiệm sinh tồn khám phá và phiêu lưu trên một vùng đất hoang dã rộng lớn mùa đông.</p>
-            <a href="#guide" class="btn-primary"><i class="fa-solid fa-bolt"></i> Khám phá ngay</a>
-        </div>
-        <div class="scroll-down">
-            <p>Scroll</p>
-            <i class="fa-solid fa-chevron-down"></i>
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-7">
+                    <div class="mb-3">
+                        <span class="status-badge"><span class="status-dot"></span> Đang hoạt động ổn định</span>
+                    </div>
+                    <h1 class="hero-title">Chào mừng đến<br>Winter In Survival</h1>
+                    <p class="lead text-secondary mb-4">Máy chủ Minecraft Việt Nam trải nghiệm sinh tồn khám phá và phiêu lưu trên một vùng đất hoang dã rộng lớn mùa đông!</p>
+                    <div class="d-flex flex-sm-row flex-column gap-3">
+                        <a href="#modes" class="btn btn-primary btn-lg rounded-pill px-4 py-2"><i class="fa-solid fa-rocket me-2"></i>Khám phá ngay</a>
+                        <a href="#guide" class="btn btn-outline-secondary btn-lg rounded-pill px-4 py-2"><i class="fa-solid fa-circle-info me-2"></i>Xem hướng dẫn</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Main Container -->
-    <main class="container">
+    <!-- LIVE STATUS SECTION -->
+    <section class="py-5 bg-white border-bottom" id="stat">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-md-4">
+                    <span class="section-tag">// Games Status</span>
+                    <h3 class="fw-bold mb-1">Trạng thái Server</h3>
+                    <p class="text-muted small mb-0">Hệ thống cập nhật khi có sự thay đổi</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded-3 text-center border">
+                        <span class="text-muted d-block small mb-1">Người chơi tối đa</span>
+                        <h4 class="fw-bold text-dark mb-0">10 / 10</h4>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded-3 text-center border">
+                        <span class="text-muted d-block small mb-1">Phiên bản hỗ trợ</span>
+                        <h4 class="fw-bold text-dark mb-0">v1.26.23.1</h4>
+                    </div>
+                </div>
+            </div>
 
-        <!-- Live Status Section -->
-        <section id="status">
-            <p class="section-label">// Games Status</p>
-            <h2 class="section-title">Máy chủ Server</h2>
-            
-            <div class="status-grid">
-                <div class="status-card">
-                    <div class="status-header">
-                        <div class="status-indicator">
-                            <div class="pulse-dot"></div> Online
+            <!-- IP Copy Blocks -->
+            <div class="row g-3 mt-4">
+                <div class="col-md-6">
+                    <div class="ip-box">
+                        <div>
+                            <span class="badge bg-primary mb-1">Java Edition (PC)</span>
+                            <div class="fw-bold text-dark fs-5" id="javaIp">winterinsurvival.online</div>
                         </div>
-                        <span style="font-size: 0.85rem; color: var(--text-muted);">Cập nhật khi có thay đổi</span>
+                        <button class="btn btn-light border btn-sm" onclick="copyIp('javaIp')"><i class="fa-regular fa-copy me-1"></i> Sao chép</button>
                     </div>
-                    
-                    <p style="color: var(--text-muted); font-size: 0.9rem; font-weight: 500;">Tổng người chơi tối đa</p>
-                    <div class="player-count">10 <span>/ 10</span></div>
-                    <div class="version-tag">Phiên bản: v1.26.23.1 </div>
-                    
-                    <div class="ip-box-container">
-                        <!-- THAY ĐỔI TẠI ĐÂY: Thẻ Tải File APK Android -->
-                        <a href="#" class="ip-box btn-apk-download" target="_blank">
-                            <div class="ip-text">
-                                <p>Phiên bản Android</p>
-                                <h4>Minecraft_PE_v1.26.23.1</h4>
-                            </div>
-                            <div class="download-icon"><i class="fa-solid fa-arrow-down-to-line"></i></div>
-                        </a>
+                </div>
+                <div class="col-md-6">
+                    <div class="ip-box">
+                        <div>
+                            <span class="badge bg-success mb-1">Bedrock Edition (PE / Mobile)</span>
+                            <div class="fw-bold text-dark fs-5" id="peIp">play.winterinsurvival.online <span class="text-muted fw-normal text-sm">(Port: 25191)</span></div>
+                        </div>
+                        <button class="btn btn-light border btn-sm" onclick="copyIp('peIp')"><i class="fa-regular fa-copy me-1"></i> Sao chép</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <!-- Thẻ IP Bedrock cũ giữ nguyên để click Copy -->
-                        <div class="ip-box" onclick="copyIp('play.winterinsurvival.online', '25191')">
-                            <div class="ip-text">
-                                <p>Bedrock (PE) — Port 25191</p>
-                                <h4>play.winterinsurvival.online</h4>
-                            </div>
-                            <div class="copy-icon"><i class="fa-regular fa-copy"></i></div>
+    <!-- GAME MODES SECTION -->
+    <section class="py-5" id="modes">
+        <div class="container text-center">
+            <span class="section-tag">// Game Modes</span>
+            <h2 class="section-title">Chế độ chơi</h2>
+            
+            <div class="row g-4 text-start">
+                <!-- Survival Mode -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="game-card">
+                        <span class="card-badge bg-danger text-white">HOT</span>
+                        <div class="game-icon">🌿</div>
+                        <h4 class="fw-bold">Phiêu lưu (Adventure)</h4>
+                        <p class="text-secondary">Nơi bạn trải nghiệm sinh tồn khám phá và phiêu lưu đầy suy ngẫm, thách thức người chơi phải tự mình suy nghĩ khi khám phá một vùng đất hoang dã rộng lớn mùa đông. Bạn phải đối mặt với zombie, cái lạnh và tất cả những mối đe dọa mà thiên nhiên có thể tạo ra.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <span class="text-success small fw-600"><i class="fa-solid fa-circle shadow-sm me-1"></i> Đang mở</span>
+                            <a href="#guide" class="btn btn-sm btn-outline-primary rounded-pill px-3">Tham gia <i class="fa-solid fa-chevron-right ms-1 small"></i></a>
                         </div>
                     </div>
                 </div>
-
-                <div class="stats-sidebar">
-                    <div class="mini-stat">
-                        <h3>24/7</h3>
-                        <p>Uptime</p>
-                    </div>
-                    <div class="mini-stat">
-                        <h3>v1.26.23.1</h3>
-                        <p>Phiên bản</p>
-                    </div>
-                    <div class="mini-stat">
-                        <h3>10-6-2026</h3>
-                        <p>Ngày Mở Server</p>
-                    </div>
-                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Game Modes Section -->
-        <section id="chariot">
-            <p class="section-label">// Game Modes</p>
-            <h2 class="section-title">Chế độ game</h2>
+    <!-- GETTING STARTED SECTION -->
+    <section class="py-5 bg-white" id="guide">
+        <div class="container text-center">
+            <span class="section-tag">// Getting Started</span>
+            <h2 class="section-title">Cách tham gia máy chủ</h2>
             
-            <div class="grid-modes">
-                <!-- Survival -->
-                <div class="mode-card">
-                    <span class="badge popular">Popular</span>
-                    <div class="mode-icon">🌿</div>
-                    <h3>Phiêu lưu (Adventure)</h3>
-                    <p>Nơi bạn trải nghiệm sinh tồn khám phá và phiêu lưu đầy suy ngẫm, thách thức người chơi phải tự mình suy nghĩ khi khám phá một vùng đất hoang dã rộng lớn mùa đông. Bạn phải đối mặt với zombie, cái lạnh và tất cả những mối đe dọa mà thiên nhiên có thể tạo ra.</p>
-                    <div class="mode-footer">
-                        <span class="status-dot-text"><span class="pulse-dot"></span> Đang hoạt động</span>
-                        <a href="#guide" class="btn-join-mode">Chơi ngay -></a>
+            <div class="row g-4 text-start">
+                <div class="col-md-4">
+                    <div class="step-box">
+                        <div class="step-number">01</div>
+                        <h5 class="fw-bold mt-2">Mở Minecraft</h5>
+                        <p class="text-secondary mb-0">Khởi động phiên bản Minecraft Java Edition trên máy tính (PC) hoặc Bedrock Edition trên điện thoại (Mobile) của bạn.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="step-box">
+                        <div class="step-number">02</div>
+                        <h5 class="fw-bold mt-2">Thêm Máy Chủ</h5>
+                        <p class="text-secondary mb-0">Vào mục <strong>Multiplayer (Chơi mạng)</strong> → Chọn <strong>Add Server (Thêm máy chủ)</strong> → Nhập chính xác địa chỉ IP của máy chủ.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="step-box">
+                        <div class="step-number">03</div>
+                        <h5 class="fw-bold mt-2">Kết Nối & Chơi</h5>
+                        <p class="text-secondary mb-0">Bấm nút <strong>Join Server (Tham gia máy chủ)</strong>, và bắt đầu cuộc hành trình phiêu lưu của bạn!</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Getting Started Section -->
-        <section id="guide" class="step-section">
-            <p class="section-label">// Getting StartGames</p>
-            <h2 class="section-title">Cách tham gia Server</h2>
-            
-            <div class="grid-steps">
-                <div class="step-card">
-                    <div class="step-num">01</div>
-                    <h3>Mở Minecraft PE</h3>
-                    <p>Khởi động Minecraft Bedrock Edition trên thiết bị của bạn.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-num">02</div>
-                    <h3>Thêm Server</h3>
-                    <p>Vào mục Multiplayer &rarr; Chọn Add Server &rarr;  Nhập Server name: <b>Winter In Survival</b> &rarr; </b> Nhập địa chỉ: <b>play.winterinsurvival.online</b> &rarr; Nhập Port Server: <b>25191</b></p>
-                </div>
-                <div class="step-card">
-                    <div class="step-num">03</div>
-                    <h3>Kết nối Server & Chơi</h3>
-                    <p>Nhấn nút Join Server và bắt đầu cuộc hành trình sinh tồn của bạn!</p>
-                </div>
-            </div>
-
-        </section>
-
-    </main>
-
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer>
-        <div class="container" style="padding:0;">
-            <p>&copy; 2026 Winter In Survival — Minecraft Server VN.</p>
+        <div class="container text-center">
+            <p class="mb-2 fw-bold text-dark">© 2026 Winter In Survival — Minecraft Server VN.</p>
         </div>
     </footer>
 
-    <!-- Script tương tác xử lý Copy IP nhanh -->
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script copy IP nhanh chóng bằng 1 click -->
     <script>
-        function copyIp(ipAddress, port = "") {
-            let textToCopy = ipAddress;
-            if(port !== "") {
-                textToCopy = ipAddress + ":" + port;
-            }
-            
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                alert("Đã sao chép địa chỉ IP: " + textToCopy);
-            }).catch(err => {
-                console.error('Không thể sao chép IP: ', err);
+        function copyIp(elementId) {
+            var text = document.getElementById(elementId).innerText.split('(')[0].trim();
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Đã sao chép địa chỉ IP: ' + text);
+            }, function(err) {
+                console.error('Không thể sao chép văn bản: ', err);
             });
         }
     </script>
- <canvas id="snowCanvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999;"></canvas>
-
-    <script>
-        (function() {
-            const canvas = document.getElementById('snowCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            // Tự động thay đổi kích thước canvas theo màn hình
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
-
-            // Cấu hình số lượng hạt tuyết tùy theo độ rộng màn hình (tránh lag mobile)
-            const maxFlakes = window.innerWidth < 768 ? 50 : 120; 
-            const flakes = [];
-
-            // Khởi tạo các hạt tuyết
-            for (let i = 0; i < maxFlakes; i++) {
-                flakes.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: Math.random() * 3 + 1, // Bán kính hạt tuyết (1px đến 4px)
-                    d: Math.random() * maxFlakes, // Độ dày/Mật độ di chuyển
-                    speed: Math.random() * 1 + 0.5, // Tốc độ rơi rơi
-                    opacity: Math.random() * 0.6 + 0.2 // Độ trong suốt ngẫu nhiên
-                });
-            }
-
-            // Hàm vẽ và cập nhật trạng thái hạt tuyết
-            function drawSnow() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = 'rgba(255, 255, 255, 1)';
-                ctx.beginPath();
-
-                for (let i = 0; i < maxFlakes; i++) {
-                    const f = flakes[i];
-                    ctx.fillStyle = `rgba(255, 255, 255, ${f.opacity})`;
-                    ctx.moveTo(f.x, f.y);
-                    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
-                }
-                ctx.fill();
-                updateSnow();
-            }
-
-            // Hàm tạo chuyển động vật lý cho tuyết (rơi chéo nhẹ sinh động)
-            let angle = 0;
-            function updateSnow() {
-                angle += 0.01;
-                for (let i = 0; i < maxFlakes; i++) {
-                    const f = flakes[i];
-                    
-                    // Cập nhật tọa độ X và Y của hạt tuyết
-                    f.y += f.speed;
-                    f.x += Math.sin(angle + f.d) * 0.5;
-
-                    // Nếu hạt tuyết rơi hết màn hình thì cho xuất hiện lại từ đỉnh
-                    if (f.y > canvas.height || f.x > canvas.width || f.x < 0) {
-                        flakes[i] = {
-                            x: Math.random() * canvas.width,
-                            y: -10,
-                            r: f.r,
-                            d: f.d,
-                            speed: f.speed,
-                            opacity: f.opacity
-                        };
-                    }
-                }
-            }
-
-            // Vòng lặp liên tục để tạo chuyển động mượt mà 60fps
-            function animationLoop() {
-                drawSnow();
-                requestAnimationFrame(animationLoop);
-            }
-            
-            animationLoop();
-        })();
-    </script>
 </body>
 </html>
+
