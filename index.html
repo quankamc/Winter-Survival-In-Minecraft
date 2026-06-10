@@ -241,6 +241,21 @@
             line-height: 1;
         }
 
+        /* Video Section Custom */
+        .video-container {
+            max-width: 850px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9ecef;
+            background: #000;
+        }
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+
         /* Footer */
         footer {
             background-color: #ffffff;
@@ -249,19 +264,23 @@
             font-size: 0.95rem;
             color: var(--text-muted);
         }
+        .disclaimer-text {
+            font-size: 0.8rem;
+            color: #8c96a0;
+            margin-top: 8px;
+            display: block;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Canvas Hiệu ứng Tuyết -->
     <canvas id="snow-canvas"></canvas>
 
-    <!-- NÚT TẢI MINECRAFT PHIÊN BẢN MỚI CHẠY THEO MÀN HÌNH -->
     <a href="https://minecraft.net" target="_blank" class="floating-download-btn" id="downloadBtn">
         <i class="fa-solid fa-download"></i> Tải Minecraft v1.26.3
     </a>
 
-    <!-- NÚT CUỘN LÊN ĐẦU TRANG -->
     <button class="back-to-top-btn" id="backToTopBtn" title="Lên đầu trang">
         <i class="fa-solid fa-arrow-up"></i>
     </button>
@@ -278,6 +297,7 @@
                     <li class="nav-item"><a class="nav-link px-3" href="#stat">Trạng thái Server</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="#modes">Chế độ chơi</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="#guide">Cách tham gia</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#trailer">Trailer</a></li>
                 </ul>
             </div>
         </div>
@@ -369,7 +389,7 @@
         </div>
     </section>
 
-    <section class="py-5 bg-white" id="guide">
+    <section class="py-5 bg-white border-bottom" id="guide">
         <div class="container text-center">
             <span class="section-tag">// Getting Started</span>
             <h2 class="section-title">Hướng dẫn tham gia</h2>
@@ -400,9 +420,26 @@
         </div>
     </section>
 
+    <section class="py-5" id="trailer">
+        <div class="container text-center">
+            <span class="section-tag">// Cinematic Video</span>
+            <h2 class="section-title">Video Giới Thiệu</h2>
+            <div class="video-container">
+                <video controls poster="hình-ảnh-nền-video-nếu-có.jpg">
+                    <source src="/trailer.mp4" type="video/mp4">
+                    Trình duyệt của bạn không hỗ trợ phát thẻ video.
+                </video>
+            </div>
+        </div>
+    </section>
+
     <footer>
         <div class="container text-center">
-            <p class="mb-2 fw-bold text-dark">© 2026 WinterInSurvival.Online - Winter Survival In Minecraft.</p>
+            <p class="mb-0 fw-bold text-dark">© 2026 Winter In Survival. All rights reserved.</p>
+            <small class="disclaimer-text">
+                <em>This server is a standalone server, not affiliated with Mojang Studios or Microsoft.<br>
+                (Máy chủ này là một máy chủ độc lập, không liên kết với Mojang Studios và Microsoft.)</em>
+            </small>
         </div>
     </footer>
 
@@ -506,4 +543,4 @@
         })();
     </script>
 </body>
-</html>
+</Trailer>
