@@ -8,9 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
-    <!-- Nhúng thư viện Supabase Client CDN phục vụ tính năng Realtime Chat -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <style>
         :root {
             --primary-color: #007bff;
@@ -266,61 +263,6 @@
             border: 0;
         }
 
-        /* CSS TÙY BIẾN CHO KHU GIẢI TRÍ VÀ REAL-TIME CHAT BOX */
-        .chat-section {
-            background-color: #11141a;
-            color: #ffffff;
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
-        .chat-container {
-            height: 400px;
-            overflow-y: auto;
-            background-color: #0b0d11;
-            border: 1px solid #222834;
-            border-radius: 16px;
-            padding: 20px;
-        }
-        .msg-line {
-            margin-bottom: 14px;
-            word-wrap: break-word;
-            font-size: 0.95rem;
-        }
-        .msg-time {
-            font-size: 0.75rem;
-            color: #56647c;
-            margin-right: 6px;
-        }
-        .msg-user {
-            color: #38bdf8;
-            font-weight: 700;
-        }
-        .msg-icon-badge {
-            margin-right: 4px;
-            font-style: normal;
-        }
-        .chat-input, .image-input {
-            background-color: #1a1f2c !important;
-            border: 1px solid #2d3548 !important;
-            color: #ffffff !important;
-            border-radius: 12px !important;
-            padding: 12px;
-        }
-        .chat-input::placeholder, .image-input::placeholder {
-            color: #4e5d78;
-        }
-        .shop-card {
-            background-color: #1a1f2c;
-            border: 1px solid #2d3548;
-            border-radius: 14px;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
         /* Footer */
         footer {
             background-color: #ffffff;
@@ -360,7 +302,6 @@
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item"><a class="nav-link px-3" href="#home">Trang chủ</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="#stat">Trạng thái Server</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="#hub">Khu giải tr</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="#modes">Chế độ chơi</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="#guide">Cách tham gia</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="#trailer">Video giới thiệu</a></li>
@@ -433,70 +374,6 @@
         </div>
     </div>
 </section>
-
-    <!-- KHU VỰC CỘNG ĐỒNG: REAL-TIME CHAT & SHOP ICON ĐĂNG NHẬP MICROSOFT -->
-    <section class="py-5 bg-light border-bottom" id="hub">
-        <div class="container">
-            <div class="text-center mb-5">
-                <span class="section-tag">// Community Social Hub</span>
-                <h2 class="section-title text-dark">Khu Tán gẫu Thành Viên</h2>
-                <p class="text-muted small">Đăng nhập tài khoản Microsoft để điểm danh và chia sẻ khoảnh khắc đẹp trong game!</p>
-            </div>
-
-            <div class="chat-section">
-                <!-- Khu vực điều khiển Đăng nhập / Trạng thái User -->
-                <div class="d-flex flex-md-row flex-column justify-content-between align-items-md-center border-bottom border-secondary pb-3 mb-4 gap-3">
-                    <div id="auth-status">
-                        <button class="btn btn-primary fw-bold rounded-pill px-4" onclick="loginMicrosoft()">
-                            <i class="fa-brands fa-microsoft me-2"></i> Đăng nhập Microsoft Account
-                        </button>
-                    </div>
-                    <div id="user-actions" class="d-none">
-                        <span class="me-3 fs-5">Tài khoản: <span id="user-badge" class="msg-icon-badge"></span><strong id="user-gamertag" class="text-info">...</strong></span>
-                        <span class="badge bg-warning text-dark fs-6 me-2"><span id="user-points">0</span> Xu</span>
-                        <button class="btn btn-success btn-sm rounded-pill px-3" onclick="dailyCheckin()">
-                            <i class="fa-solid fa-calendar-check me-1"></i> Điểm danh nhận Xu
-                        </button>
-                    </div>
-                </div>
-
-                <div class="row g-4">
-                    <!-- KHUNG TRÒ CHUYỆN REAL-TIME -->
-                    <div class="col-lg-8">
-                        <h5 class="mb-3"><i class="fa-regular fa-comments me-2 text-primary"></i>Phòng tán gẫu & Chia sẻ khoảnh khắc</h5>
-                        <div class="chat-container id" id="chat-box">
-                            <p class="text-muted small text-center">Đang kết nối phòng chat...</p>
-                        </div>
-
-                        <!-- Khung gửi dữ liệu -->
-                        <div class="mt-3">
-                            <div id="chat-blocked-notice" class="alert alert-warning text-center py-2 rounded-3">
-                                Bạn cần đăng nhập tài khoản Microsoft để có thể gửi tin nhắn.
-                            </div>
-                            <form id="chat-form" class="d-none" onsubmit="sendChatMessage(event)">
-                                <div class="mb-2">
-                                    <input type="text" id="chat-msg-input" class="form-control chat-input" placeholder="Nhập tin nhắn trò chuyện..." required>
-                                </div>
-                                <div class="input-group">
-                                    <input type="url" id="chat-img-input" class="form-control image-input" placeholder="Dán link ảnh chụp khoảnh khắc đẹp trong game (Tùy chọn)...">
-                                    <button class="btn btn-warning fw-bold px-4" type="submit">GỬI LÊN</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- SHOP CỬA HÀNG ICON DANH HIỆU -->
-                    <div class="col-lg-4">
-                        <h5 class="mb-3"><i class="fa-solid fa-store me-2 text-danger"></i>Cửa hàng Icon trước tên</h5>
-                        <div id="shop-container">
-                            <!-- Render tự động qua JS -->
-                            <p class="text-muted small">Đang tải danh sách cửa hàng...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section class="py-5" id="modes">
         <div class="container text-center">
@@ -577,167 +454,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- SCRIPT HỆ THỐNG XỬ LÝ DATABASE CHAT VÀ AUTH -->
-    <script>
-        // Cấu hình mã kết nối Supabase của bạn (Điền thông tin lấy ở Dashboard Supabase vào đây)
-        const SUPABASE_URL = "https://your-project-id.supabase.co"; 
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; 
-        
-        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        let currentUser = null;
-
-        // Điền Client ID đăng ký trên Azure Microsoft App
-        const MICROSOFT_CLIENT_ID = "MÃ_APPLICATION_CLIENT_ID_CỦA_BẠN";
-        const REDIRECT_URI = "https://winterinsurvival.online/api/auth/callback";
-
-        function loginMicrosoft() {
-            window.location.href = `https://login.live.com/oauth20_authorize.srf?client_id=${MICROSOFT_CLIENT_ID}&response_type=code&scope=XboxLive.signin%20offline_access&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
-        }
-
-        async function initHub() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('logged') === 'true') {
-                const xuid = urlParams.get('xuid');
-                // Tải thông tin chi tiết của User đăng nhập
-                const { data, error } = await _supabase.from('users').select('*').eq('xuid', xuid).single();
-                if (data) {
-                    currentUser = data;
-                    document.getElementById('auth-status').classList.add('d-none');
-                    document.getElementById('user-actions').classList.remove('d-none');
-                    document.getElementById('chat-blocked-notice').classList.add('d-none');
-                    document.getElementById('chat-form').classList.remove('d-none');
-                    
-                    document.getElementById('user-gamertag').innerText = currentUser.gamertag;
-                    document.getElementById('user-points').innerText = currentUser.points;
-                    document.getElementById('user-badge').innerText = currentUser.current_icon || '';
-                }
-            }
-            loadChatHistory();
-            loadShopIcons();
-            listenRealtimeChat();
-        }
-
-        async function loadChatHistory() {
-            const { data, error } = await _supabase.from('chat_messages').select('*').order('created_at', { ascending: true }).limit(40);
-            if (data) {
-                const box = document.getElementById('chat-box');
-                box.innerHTML = '';
-                data.forEach(msg => appendMessageToBox(msg));
-                box.scrollTop = box.scrollHeight;
-            }
-        }
-
-        function appendMessageToBox(msg) {
-            const box = document.getElementById('chat-box');
-            const timeStr = new Date(msg.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            
-            let imgHtml = '';
-            if (msg.image_url) {
-                imgHtml = `<div class="mt-2"><img src="${msg.image_url}" style="max-width: 280px; border-radius: 8px; border: 1px solid #333;" alt="Khoảnh khắc Minecraft"></div>`;
-            }
-
-            const line = document.createElement('div');
-            line.className = 'msg-line';
-            line.innerHTML = `<span class="msg-time">[${timeStr}]</span><i class="msg-icon-badge">${msg.icon || ''}</i><span class="msg-user">${msg.gamertag}:</span> ${msg.message} ${imgHtml}`;
-            box.appendChild(line);
-        }
-
-        function listenRealtimeChat() {
-            _supabase.channel('public:chat_messages')
-            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_messages' }, payload => {
-                appendMessageToBox(payload.new);
-                const box = document.getElementById('chat-box');
-                box.scrollTop = box.scrollHeight;
-            }).subscribe();
-        }
-
-        async function sendChatMessage(e) {
-            e.preventDefault();
-            if (!currentUser) return;
-            const msgInput = document.getElementById('chat-msg-input');
-            const imgInput = document.getElementById('chat-img-input');
-
-            if (!msgInput.value.trim() && !imgInput.value.trim()) return;
-
-            await _supabase.from('chat_messages').insert({
-                xuid: currentUser.xuid,
-                gamertag: currentUser.gamertag,
-                icon: currentUser.current_icon || '',
-                message: msgInput.value,
-                image_url: imgInput.value
-            });
-
-            msgInput.value = '';
-            imgInput.value = '';
-        }
-
-        async function dailyCheckin() {
-            if (!currentUser) return;
-            const today = new Date().toISOString().split('T')[0];
-            if (currentUser.last_checkin === today) {
-                alert('Hôm nay bạn đã điểm danh rồi, hãy quay lại vào ngày mai nhé!');
-                return;
-            }
-
-            const updatedPoints = currentUser.points + 20;
-            const { error } = await _supabase.from('users').update({ last_checkin: today, points: updatedPoints }).eq('xuid', currentUser.xuid);
-            
-            if (!error) {
-                currentUser.points = updatedPoints;
-                currentUser.last_checkin = today;
-                document.getElementById('user-points').innerText = updatedPoints;
-                alert('Điểm danh thành công! Bạn nhận được +20 xu.');
-            }
-        }
-
-        async function loadShopIcons() {
-            const { data, error } = await _supabase.from('shop_icons').select('*');
-            if (data) {
-                const container = document.getElementById('shop-container');
-                container.innerHTML = '';
-                data.forEach(item => {
-                    const card = document.createElement('div');
-                    card.className = 'shop-card';
-                    card.innerHTML = `
-                        <div><span class="fs-4 me-2">${item.icon_char}</span> Danh hiệu</div>
-                        <div>
-                            <button class="btn btn-sm btn-outline-warning fw-bold" onclick="buyIcon('${item.id}', '${item.icon_char}', ${item.price})">
-                                Mua (${item.price} xu)
-                            </button>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-            }
-        }
-
-        async function buyIcon(id, character, price) {
-            if (!currentUser) {
-                alert('Vui lòng đăng nhập tài khoản Microsoft trước.');
-                return;
-            }
-            if (currentUser.points < price) {
-                alert('Bạn không có đủ xu. Hãy điểm danh mỗi ngày để tích lũy thêm.');
-                return;
-            }
-
-            const updatedPoints = currentUser.points - price;
-            const { error } = await _supabase.from('users').update({ points: updatedPoints, current_icon: character }).eq('xuid', currentUser.xuid);
-
-            if (!error) {
-                currentUser.points = updatedPoints;
-                currentUser.current_icon = character;
-                document.getElementById('user-points').innerText = updatedPoints;
-                document.getElementById('user-badge').innerText = character;
-                alert(`Mua thành công danh hiệu ${character}! Hệ thống đã áp dụng trước tên của bạn trên khung chat.`);
-                loadChatHistory(); // Cập nhật lại khung chat
-            }
-        }
-
-        // Chạy khởi tạo cổng giải trí khi trang web tải xong
-        window.addEventListener('DOMContentLoaded', initHub);
-    </script>
     
     <script>
         // 1. Hàm sao chép Tên Máy Chủ
@@ -825,41 +541,4 @@
                         flakes[i] = { x: Math.random() * width, y: -10, r: f.r, d: f.d, speedY: f.speedY, speedX: f.speedX };
                     }
                 }
-                ctx.fill();
-                requestAnimationFrame(draw);
-            }
-
-            window.addEventListener("resize", function () {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
-            });
-            draw();
-        })();
-    </script>
-
-<script>
-    function updatePlayerCount() {
-        fetch("https://api.mcstatus.io/v2/status/bedrock/play.winterinsurvival.online:25191")
-            .then(response => response.json())
-            .then(data => {
-                const countElement = document.getElementById("player-count");
-                if (data.online) {
-                    countElement.innerText = data.players.online + " / " + data.players.max;
-                } else {
-                    countElement.innerText = "Server Offline";
-                }
-            })
-            .catch(error => {
-                console.error("Lỗi:", error);
-                document.getElementById("player-count").innerText = "Lỗi kết nối";
-            });
-    }
-    
-    // Gọi hàm ngay lập tức
-    updatePlayerCount();
-    // Tự động cập nhật mỗi 30 giây
-    setInterval(updatePlayerCount, 30000);
-</script>
-
-</body>
-</html>
+                ctx
