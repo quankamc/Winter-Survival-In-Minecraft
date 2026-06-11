@@ -597,10 +597,10 @@
 
     // 1. Hiển thị câu chào tự động
     const currentHour = new Date().getHours();
-    if (currentHour >= 4 && currentHour < 12) greetingElement.textContent = "Chào buổi sáng!";
-    else if (currentHour >= 12 && currentHour < 13) greetingElement.textContent = "Chúc buổi trưa vui vẻ!";
-    else if (currentHour >= 13 && currentHour < 18) greetingElement.textContent = "Chào buổi chiều!";
-    else greetingElement.textContent = "Chào buổi tối!";
+    if (currentHour >= 4 && currentHour < 12) greetingElement.textContent = "Chúc bạn buổi sáng tốt lành!";
+    else if (currentHour >= 12 && currentHour < 13) greetingElement.textContent = "Chúc bạn buổi trưa vui vẻ!";
+    else if (currentHour >= 13 && currentHour < 18) greetingElement.textContent = "Chúc bạn buổi chiều!";
+    else greetingElement.textContent = "Chúc bạn buổi tối vui vẻ!";
 
     // 2. Xử lý thời gian kết thúc
     let endTime = localStorage.getItem('maintenanceEndTime');
