@@ -593,8 +593,8 @@
         let endTime = localStorage.getItem('maintenanceEndTime');
 
         if (!endTime) {
-            // Thiết lập 10 phút tính từ bây giờ
-            endTime = new Date().getTime() + (10 * 60 * 1000); 
+            // Thiết lập 24h tính từ bây giờ
+            endTime = new Date().getTime() + (24 * 60 * 60 * 1000); 
             localStorage.setItem('maintenanceEndTime', endTime);
         }
 
@@ -610,7 +610,8 @@
                 return;
             }
 
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const seconds = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
             display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }, 1000);
