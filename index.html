@@ -282,15 +282,6 @@
 </head>
 <body>
     
-    <div id="maintenance-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); color: #fff; z-index: 99999; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-    <h2 id="greeting-text" style="font-size: 1.5rem; margin-top: 10px; color: #fff;"></h2>
-    <h1 style="font-size: 3rem;">⚙️ Hệ thống Server đang được bảo trì</h1>
-    <p style="font-size: 1.5rem;">Hiện không thể đăng nhập vào Server. Vui lòng quay trở lại sau!</p>
-    <div id="countdown" style="font-size: 4rem; font-weight: bold; color: #ffcc00; margin-top: 20px;">00:00</div>
-    <p id="expected-time" style="font-size: 1.2rem; margin-top: 10px; color: #ffcc00; font-weight: bold;"></p>   
-</div>
-    
-
     <canvas id="snow-canvas"></canvas>
 
     <a href="https://drive.google.com/file/d/1DKX9y0otfpJXPVY70gMIhTSzfGXabTd4/view?usp=drivesdk" target="_blank" class="floating-download-btn" id="downloadBtn">
@@ -585,79 +576,5 @@
         // Tự động cập nhật mỗi 30 giây
         setInterval(updatePlayerCount, 30000);
     </script>
-
-    <script>
-    function startCountdown() {
-    const popup = document.getElementById('maintenance-popup');
-    const display = document.getElementById('countdown');
-    const expectedTimeElement = document.getElementById('expected-time');
-    const greetingElement = document.getElementById('greeting-text'); // Phần mới
-    
-    popup.style.display = 'flex';
-
-    // 1. Hiển thị câu chào tự động
-    const currentHour = new Date().getHours();
-    if (currentHour >= 4 && currentHour < 12) greetingElement.textContent = "Chúc bạn một buổi sáng thật tuyệt vời!";
-    else if (currentHour >= 12 && currentHour < 13) greetingElement.textContent = "Chúc bạn buổi trưa luôn vui vẻ!";
-    else if (currentHour >= 13 && currentHour < 18) greetingElement.textContent = "Chúc bạn buổi chiều đầy phấn khởi!";
-    else greetingElement.textContent = "Hy vọng bạn có một buổi tối thật an lành!";
-
-    // 2. Xử lý thời gian kết thúc
-    let endTime = localStorage.getItem('maintenanceEndTime');
-    if (!endTime) {
-        const duration = 12 * 60 * 60 * 1000; 
-        endTime = new Date().getTime() + duration; 
-        localStorage.setItem('maintenanceEndTime', endTime);
-    }
-
-    const endDate = new Date(parseInt(endTime));
-    let hours = endDate.getHours();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12 || 12; 
-    const minutes = endDate.getMinutes().toString().padStart(2, '0');
-    const day = endDate.getDate().toString().padStart(2, '0');
-    const month = (endDate.getMonth() + 1).toString().padStart(2, '0');
-    const year = endDate.getFullYear();
-
-    expectedTimeElement.textContent = `Dự kiến hoàn thành lúc: ${hours}:${minutes} ${ampm}, ngày ${day}/${month}/${year}`;
-
-    // 3. Đếm ngược
-    const timer = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = endTime - now;
-        if (distance < 0) {
-            clearInterval(timer);
-            popup.style.display = 'none'; 
-            localStorage.removeItem('maintenanceEndTime');
-            return;
-        }
-        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((distance % (1000 * 60)) / 1000);
-        display.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-    }, 1000);
-}
-    // Kiểm tra trạng thái từ status.json
-    setInterval(async () => {
-        try {
-            const response = await fetch('/status.json?t=' + new Date().getTime());
-            const data = await response.json();
-            
-            const popup = document.getElementById('maintenance-popup');
-            
-            if (data.maintenance) {
-                if (popup.style.display === 'none') {
-                    startCountdown();
-                }
-            } else {
-                // Nếu trên server sửa thành false, ẩn ngay lập tức
-                popup.style.display = 'none';
-                localStorage.removeItem('maintenanceEndTime');
-            }
-        } catch (e) {
-            console.log("Đang kiểm tra trạng thái...");
-        }
-    }, 1000);
-</script>
 </body>
 </html>
