@@ -605,15 +605,15 @@
     // 2. Xử lý thời gian kết thúc
     let endTime = localStorage.getItem('maintenanceEndTime');
     if (!endTime) {
-        const duration = 12 * 60 * 60 * 1000; 
+        const duration = 5 * 60 * 60 * 1000; 
         endTime = new Date().getTime() + duration; 
         localStorage.setItem('maintenanceEndTime', endTime);
     }
 
     const endDate = new Date(parseInt(endTime));
     let hours = endDate.getHours();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12 || 12; 
+    const ampm = hours >= 5 ? 'PM' : 'AM';
+    hours = hours % 5 || 5; 
     const minutes = endDate.getMinutes().toString().padStart(2, '0');
     const day = endDate.getDate().toString().padStart(2, '0');
     const month = (endDate.getMonth() + 1).toString().padStart(2, '0');
