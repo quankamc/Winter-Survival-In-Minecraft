@@ -329,51 +329,51 @@
     </section>
 
      <section class="py-5 bg-white border-bottom" id="stat">
-    <div class="container">
-        <div class="text-center mb-5">
-            <span class="section-tag">// Games Status</span>
-            <h3 class="section-title">Trạng thái Server</h3>
-            <p class="text-muted small">Hệ thống cập nhật mỗi 30 giây</p>
-        </div>
-
-        <div class="row g-4 justify-content-center">
-            <div class="col-lg-3 col-md-6">
-                <div class="p-4 bg-light rounded-4 text-center border h-100 shadow-sm">
-                    <span class="text-muted d-block small mb-1">Người chơi đang Online</span>
-                    <h4 id="player-count" class="fw-bold text-dark mb-0">Đang tải...</h4>
-                </div>
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="section-tag">// Games Status</span>
+                <h3 class="section-title">Trạng thái Server</h3>
+                <p class="text-muted small">Hệ thống cập nhật mỗi 30 giây</p>
             </div>
 
-            <div class="col-lg-3 col-md-6">
-                <div class="p-4 bg-light rounded-4 text-center border h-100 shadow-sm">
-                    <span class="text-muted d-block small mb-1">Phiên bản hỗ trợ</span>
-                    <h4 class="fw-bold text-dark mb-0">1.26.3</h4>
-                </div>
-            </div>
-        </div>
-
-        <div class="row g-3 mt-4 justify-content-center">
-            <div class="col-lg-6 col-md-10">
-                <div class="ip-box mb-3">
-                    <div>
-                        <span class="badge bg-primary mb-1">Server Name</span>
-                        <div class="fw-bold text-dark fs-5" id="serverName">Winter In Survival</div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-3 col-md-6">
+                    <div class="p-4 bg-light rounded-4 text-center border h-100 shadow-sm">
+                        <span class="text-muted d-block small mb-1">Người chơi đang Online</span>
+                        <h4 id="player-count" class="fw-bold text-dark mb-0">Đang tải...</h4>
                     </div>
-                    <button class="btn btn-light border btn-sm" onclick="copyText('serverName')"><i class="fa-regular fa-copy me-1"></i> Sao chép</button>
                 </div>
 
-                <div class="ip-box">
-                    <div>
-                        <span class="badge bg-success mb-1">Bedrock IP (PE/MOBILE)</span>
-                        <div class="fw-bold text-dark fs-5" id="peIp">play.winterinsurvival.online</div>
-                        <small class="text-muted">(Port: 25191)</small>
+                <div class="col-lg-3 col-md-6">
+                    <div class="p-4 bg-light rounded-4 text-center border h-100 shadow-sm">
+                        <span class="text-muted d-block small mb-1">Phiên bản hỗ trợ</span>
+                        <h4 class="fw-bold text-dark mb-0">1.26.3</h4>
                     </div>
-                    <button class="btn btn-light border btn-sm" onclick="copyIp('peIp')"><i class="fa-regular fa-copy me-1"></i> Sao chép</button>
+                </div>
+            </div>
+
+            <div class="row g-3 mt-4 justify-content-center">
+                <div class="col-lg-6 col-md-10">
+                    <div class="ip-box mb-3">
+                        <div>
+                            <span class="badge bg-primary mb-1">Server Name</span>
+                            <div class="fw-bold text-dark fs-5" id="serverName">Winter In Survival</div>
+                        </div>
+                        <button class="btn btn-light border btn-sm" onclick="copyText('serverName')"><i class="fa-regular fa-copy me-1"></i> Sao chép</button>
+                    </div>
+
+                    <div class="ip-box">
+                        <div>
+                            <span class="badge bg-success mb-1">Bedrock IP (PE/MOBILE)</span>
+                            <div class="fw-bold text-dark fs-5" id="peIp">play.winterinsurvival.online</div>
+                            <small class="text-muted">(Port: 25191)</small>
+                        </div>
+                        <button class="btn btn-light border btn-sm" onclick="copyIp('peIp')"><i class="fa-regular fa-copy me-1"></i> Sao chép</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <section class="py-5" id="modes">
         <div class="container text-center">
@@ -541,4 +541,40 @@
                         flakes[i] = { x: Math.random() * width, y: -10, r: f.r, d: f.d, speedY: f.speedY, speedX: f.speedX };
                     }
                 }
-                ctx
+                ctx.fill();
+                requestAnimationFrame(draw);
+            }
+
+            window.addEventListener("resize", function () {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+            draw();
+        })();
+    </script>
+
+    <script>
+        function updatePlayerCount() {
+            fetch("https://api.mcstatus.io/v2/status/bedrock/play.winterinsurvival.online:25191")
+                .then(response => response.json())
+                .then(data => {
+                    const countElement = document.getElementById("player-count");
+                    if (data.online) {
+                        countElement.innerText = data.players.online + " / " + data.players.max;
+                    } else {
+                        countElement.innerText = "Server Offline";
+                    }
+                })
+                .catch(error => {
+                    console.error("Lỗi:", error);
+                    document.getElementById("player-count").innerText = "Lỗi kết nối";
+                });
+        }
+        
+        // Gọi hàm ngay lập tức
+        updatePlayerCount();
+        // Tự động cập nhật mỗi 30 giây
+        setInterval(updatePlayerCount, 30000);
+    </script>
+</body>
+</html>
