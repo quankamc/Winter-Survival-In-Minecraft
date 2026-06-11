@@ -605,7 +605,7 @@
     // 2. Xử lý thời gian kết thúc
     let endTime = localStorage.getItem('maintenanceEndTime');
     if (!endTime) {
-        const duration = 5 * 60 * 60 * 1000; 
+        const duration = 12 * 60 * 60 * 1000; 
         endTime = new Date().getTime() + duration; 
         localStorage.setItem('maintenanceEndTime', endTime);
     }
