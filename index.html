@@ -283,6 +283,7 @@
 <body>
     
     <div id="maintenance-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); color: #fff; z-index: 99999; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+    <h2 id="greeting-text" style="font-size: 1.5rem; margin-top: 10px; color: #fff;"></h2>
     <h1 style="font-size: 3rem;">⚙️ Hệ thống Server đang được bảo trì</h1>
     <p style="font-size: 1.5rem;">Hiện không thể đăng nhập vào Server. Vui lòng quay trở lại sau!</p>
     <div id="countdown" style="font-size: 4rem; font-weight: bold; color: #ffcc00; margin-top: 20px;">00:00</div>
@@ -587,51 +588,56 @@
 
     <script>
     function startCountdown() {
-        const popup = document.getElementById('maintenance-popup');
-        const display = document.getElementById('countdown');
-        const expectedTimeElement = document.getElementById('expected-time');
-        
-        popup.style.display = 'flex';
+    function startCountdown() {
+    const popup = document.getElementById('maintenance-popup');
+    const display = document.getElementById('countdown');
+    const expectedTimeElement = document.getElementById('expected-time');
+    const greetingElement = document.getElementById('greeting-text'); // Phần mới
+    
+    popup.style.display = 'flex';
 
-        let endTime = localStorage.getItem('maintenanceEndTime');
-        
-        if (!endTime) {
-            // CẤU HÌNH: Thay 12 bằng số giờ bạn muốn bảo trì
-            const duration = 12 * 60 * 60 * 1000; 
-            endTime = new Date().getTime() + duration; 
-            localStorage.setItem('maintenanceEndTime', endTime);
-        }
+    // 1. Hiển thị câu chào tự động
+    const currentHour = new Date().getHours();
+    if (currentHour >= 4 && currentHour < 12) greetingElement.textContent = "Chào buổi sáng!";
+    else if (currentHour >= 12 && currentHour < 13) greetingElement.textContent = "Chúc buổi trưa vui vẻ!";
+    else if (currentHour >= 13 && currentHour < 18) greetingElement.textContent = "Chào buổi chiều!";
+    else greetingElement.textContent = "Chào buổi tối!";
 
-        // Tính toán hiển thị ngày giờ dự kiến
-        const endDate = new Date(parseInt(endTime));
-        let hours = endDate.getHours();
-        const ampm = hours >= 12 ? 'CH (Chiều/Tối)' : 'SA (Sáng/Trưa)';
-        hours = hours % 12 || 12; 
-        const minutes = endDate.getMinutes().toString().padStart(2, '0');
-        const day = endDate.getDate().toString().padStart(2, '0');
-        const month = (endDate.getMonth() + 1).toString().padStart(2, '0');
-        const year = endDate.getFullYear();
-
-        expectedTimeElement.textContent = `Dự kiến hoàn thành lúc: ${hours}:${minutes} ${ampm}, ngày ${day}/${month}/${year}`;
-
-        const timer = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = endTime - now;
-
-            if (distance < 0) {
-                clearInterval(timer);
-                popup.style.display = 'none'; 
-                localStorage.removeItem('maintenanceEndTime');
-                return;
-            }
-
-            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((distance % (1000 * 60)) / 1000);
-            
-            display.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-        }, 1000);
+    // 2. Xử lý thời gian kết thúc
+    let endTime = localStorage.getItem('maintenanceEndTime');
+    if (!endTime) {
+        const duration = 12 * 60 * 60 * 1000; 
+        endTime = new Date().getTime() + duration; 
+        localStorage.setItem('maintenanceEndTime', endTime);
     }
+
+    const endDate = new Date(parseInt(endTime));
+    let hours = endDate.getHours();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12; 
+    const minutes = endDate.getMinutes().toString().padStart(2, '0');
+    const day = endDate.getDate().toString().padStart(2, '0');
+    const month = (endDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = endDate.getFullYear();
+
+    expectedTimeElement.textContent = `Dự kiến hoàn thành lúc: ${hours}:${minutes} ${ampm}, ngày ${day}/${month}/${year}`;
+
+    // 3. Đếm ngược
+    const timer = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = endTime - now;
+        if (distance < 0) {
+            clearInterval(timer);
+            popup.style.display = 'none'; 
+            localStorage.removeItem('maintenanceEndTime');
+            return;
+        }
+        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((distance % (1000 * 60)) / 1000);
+        display.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }, 1000);
+}
     // Kiểm tra trạng thái từ status.json
     setInterval(async () => {
         try {
