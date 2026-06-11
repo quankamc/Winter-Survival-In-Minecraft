@@ -585,45 +585,58 @@
     </script>
     
     <script>
-    // Thời gian đếm ngược (ví dụ 10 phút = 600 giây)
-let timeLeft = 600; 
+    function startCountdown() {
+        const popup = document.getElementById('maintenance-popup');
+        const display = document.getElementById('countdown');
+        popup.style.display = 'flex';
 
-function startCountdown() {
-    const popup = document.getElementById('maintenance-popup');
-    const display = document.getElementById('countdown');
-    
-    // Hiển thị popup
-    popup.style.display = 'flex';
+        let endTime = localStorage.getItem('maintenanceEndTime');
 
-    const timer = setInterval(() => {
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-
-        display.textContent = 
-            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            display.textContent = "Đang cập nhật...";
+        if (!endTime) {
+            // Thiết lập 10 phút tính từ bây giờ
+            endTime = new Date().getTime() + (10 * 60 * 1000); 
+            localStorage.setItem('maintenanceEndTime', endTime);
         }
-        timeLeft--;
-    }, 1000);
-}
 
-// Kiểm tra trạng thái từ file JSON (như đã hướng dẫn ở bước trước)
-setInterval(async () => {
-    try {
-        const response = await fetch('/status.json?t=' + new Date().getTime());
-        const data = await response.json();
-        
-        // Nếu file JSON trả về true và popup chưa hiển thị
-        if (data.maintenance && document.getElementById('maintenance-popup').style.display === 'none') {
-            startCountdown();
-        }
-    } catch (e) {
-        console.log("Kiểm tra trạng thái...");
+        const timer = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = endTime - now;
+
+            if (distance < 0) {
+                // HẾT THỜI GIAN: Ẩn popup và dọn dẹp
+                clearInterval(timer);
+                popup.style.display = 'none'; 
+                localStorage.removeItem('maintenanceEndTime');
+                return;
+            }
+
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
     }
-}, 1000); // Kiểm tra mỗi 1 giây
+
+    // Kiểm tra trạng thái từ status.json
+    setInterval(async () => {
+        try {
+            const response = await fetch('/status.json?t=' + new Date().getTime());
+            const data = await response.json();
+            
+            const popup = document.getElementById('maintenance-popup');
+            
+            if (data.maintenance) {
+                if (popup.style.display === 'none') {
+                    startCountdown();
+                }
+            } else {
+                // Nếu trên server sửa thành false, ẩn ngay lập tức
+                popup.style.display = 'none';
+                localStorage.removeItem('maintenanceEndTime');
+            }
+        } catch (e) {
+            console.log("Đang kiểm tra trạng thái...");
+        }
+    }, 1000);
 </script>
 </body>
 </html>
