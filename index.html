@@ -283,8 +283,8 @@
 <body>
     
     <div id="maintenance-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); color: #fff; z-index: 99999; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-    <h1 style="font-size: 3rem;">⚙️ Hệ thống máy chủ đang được bảo trì</h1>
-    <p style="font-size: 1.5rem;">Hiện tại không thể đăng nhập vào Server. Vui lòng quay trở lại sau!</p>
+    <h1 style="font-size: 3rem;">⚙️ Hệ thống Server đang được bảo trì</h1>
+    <p style="font-size: 1.5rem;">Hiện không thể đăng nhập vào Server. Vui lòng quay trở lại sau!</p>
     <div id="countdown" style="font-size: 4rem; font-weight: bold; color: #ffcc00; margin-top: 20px;">00:00</div>
     <p id="expected-time" style="font-size: 1.2rem; margin-top: 10px; color: #ffcc00; font-weight: bold;"></p>   
 </div>
@@ -605,7 +605,7 @@
         // Tính toán hiển thị ngày giờ dự kiến
         const endDate = new Date(parseInt(endTime));
         let hours = endDate.getHours();
-        const ampm = hours >= 12 ? 'CH' : 'SA';
+        const ampm = hours >= 12 ? 'CH (Chiều/Tối)' : 'SA (Sáng/Trưa)';
         hours = hours % 12 || 12; 
         const minutes = endDate.getMinutes().toString().padStart(2, '0');
         const day = endDate.getDate().toString().padStart(2, '0');
