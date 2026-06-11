@@ -328,20 +328,19 @@
         </div>
     </section>
 
-    <section class="py-5 bg-white border-bottom" id="stat">
-        <div class="container">
-            <div class="row align-items-center g-4">
-                <div class="col-md-4">
-                    <span class="section-tag">// Games Status</span>
-                    <h3 class="fw-bold mb-1">Trạng thái Server</h3>
-                    <p class="text-muted small mb-0">Hệ thống cập nhật khi có sự thay đổi</p>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-3 bg-light rounded-3 text-center border">
-                        <span class="text-muted d-block small mb-1">Người chơi tối đa</span>
-                        <h4 class="fw-bold text-dark mb-0">50 / 50</h4>
-                    </div>
-                </div>
+     <section class="py-5 bg-white border-bottom" id="stat">
+    <div class="container text-center">
+        <span class="section-tag">// Games Status</span>
+        <h3 class="section-title">Trạng thái Server</h3>
+        
+        <div class="status-widget-container" style="max-width: 400px; margin: 0 auto; border: 1px solid #dee2e6; border-radius: 12px; padding: 15px; background: #f8f9fa;">
+            <span class="text-muted small">Người chơi Online</span>
+            <h4 id="player-count" class="fw-bold text-dark mt-1" style="margin-bottom: 0;">Đang tải...</h4>
+        </div>
+        
+        </div>
+</section>
+                
                 <div class="col-md-4">
                     <div class="p-3 bg-light rounded-3 text-center border">
                         <span class="text-muted d-block small mb-1">Phiên bản hỗ trợ</span>
@@ -551,6 +550,31 @@
             draw();
         })();
     </script>
+
+<script>
+    function updatePlayerCount() {
+        fetch("https://api.mcstatus.io/v2/status/bedrock/play.winterinsurvival.online:25191")
+            .then(response => response.json())
+            .then(data => {
+                const countElement = document.getElementById("player-count");
+                if (data.online) {
+                    countElement.innerText = data.players.online + " / " + data.players.max;
+                } else {
+                    countElement.innerText = "Server Offline";
+                }
+            })
+            .catch(error => {
+                console.error("Lỗi:", error);
+                document.getElementById("player-count").innerText = "Lỗi kết nối";
+            });
+    }
+    
+    // Gọi hàm ngay lập tức
+    updatePlayerCount();
+    // Tự động cập nhật mỗi 30 giây
+    setInterval(updatePlayerCount, 30000);
+</script>
+
+
 </body>
 </html>
-
