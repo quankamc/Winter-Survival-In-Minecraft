@@ -488,7 +488,7 @@
 
     <footer>
         <div class="container text-center">
-            <p class="mb-0 fw-bold text-dark">© 2026 Winter In Survival. All rights reserved.</p>
+            <p class="mb-0 fw-bold text-dark">© <span id="currentYear"></span> Winter In Survival. All rights reserved.</p>
             <small class="disclaimer-text">
                 <em>This server is a standalone server, not affiliated with Mojang AB.<br>
                 (Máy chủ này là một máy chủ độc lập, không liên kết với Mojang AB.)</em>
@@ -619,5 +619,8 @@
         // Tự động cập nhật mỗi 30 giây
         setInterval(updatePlayerCount, 30000);
     </script>
+    <script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
