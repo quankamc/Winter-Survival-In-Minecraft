@@ -21,7 +21,7 @@ body {
 @keyframes changeBackground {
     0%, 30% { background-image: url('https://img.upanhnhanh.com/6334aca21fef46674b866e8df6ee169d'); }
     35%, 65% { background-image: url('https://img.upanhnhanh.com/b1839732cb367f504be96b790f69b6a2'); }
-    70%, 100% { background-image: url('https://img.upanhnhanh.com/bfac181804a14c39dddca6d3b00e280e'); }
+    70%, 100% { background-image: url('https://img.upanhnhanh.com/49a4185f606f633efd2c2820a4909310'); }
 }
 
 body::before {
